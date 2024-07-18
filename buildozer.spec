@@ -4,10 +4,10 @@
 title = Jaya WebTools
 
 # (str) Package name
-package.name = jaya
+package.name = myapp
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = id.pbssi
+package.domain = org.test
 
 # (str) Source code where the main.py live
 source.dir = .
