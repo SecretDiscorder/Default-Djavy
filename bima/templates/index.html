@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>BIMA APPS</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url("https://i.ibb.co.com/6vmSLQP/background.webp");
+            background-position: center;
+            background-repeat: repeat;
+            background-size: cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .gallery-container {
+            width: 100%;
+            max-width: 1850px; /* Max width for gallery container */
+            margin: 20px auto; /* Center align the gallery with some top margin */
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap; /* Wrap items to next line */
+            justify-content: center; /* Center align items */
+            gap: 20px; /* Spacing between cards */
+            padding: 0 20px; /* Horizontal padding to prevent edge cutting */
+        }
+
+        .boardcard {
+            width: 200px; /* Set fixed width */
+            height: 200px; /* Set fixed height */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            position: relative;
+            overflow: hidden; /* Hide overflow content */
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin: 10px; /* Adjust margin as needed */
+        }
+
+        .boardcard:hover {
+            transform: translateY(-5px); /* Lift card on hover */
+        }
+
+        .boardcard a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            text-decoration: none;
+            color: black;
+            text-align: center;
+        }
+
+        .boardcard img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px; /* Ensure rounded corners for images */
+            transition: transform 0.3s ease; /* Smooth transition */
+        }
+
+        .boardcard:hover img {
+            transform: scale(1.1); /* Scale up image on hover */
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .page-link {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .page-link.active {
+            background-color: #0056b3;
+        }
+
+        /* Sidebar Styles */
+        #sidebar {
+            position: fixed;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: #042331;
+            transition: all .5s ease;
+            z-index: 1000; /* Ensure sidebar stays above content */
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #sidebar ul a {
+            display: block;
+            height: 65px;
+            line-height: 65px;
+            font-size: 20px;
+            color: white;
+            padding-left: 20px;
+            text-decoration: none;
+            transition: .4s;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+        }
+
+        #sidebar ul a:hover {
+            background-color: #0a5275;
+            padding-left: 30px;
+        }
+
+        label #btn, label #cancel {
+            position: absolute;
+            background: #042331;
+            border-radius: 3px;
+            cursor: pointer;
+            z-index: 1001; /* Ensure button stays above content */
+        }
+
+        label #btn {
+            left: 20px;
+            top: 20px;
+            font-size: 30px;
+            color: white;
+            padding: 6px 12px;
+            transition: all .5s;
+        }
+
+        label #cancel {
+            left: -195px;
+            top: 20px;
+            font-size: 30px;
+            color: #0a5275;
+            padding: 4px 9px;
+            transition: all .5s ease;
+        }
+
+        #check {
+            display: none;
+        }
+
+        #check:checked ~ #sidebar {
+            left: 0;
+        }
+
+        #check:checked ~ label #btn {
+            left: 250px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #check:checked ~ label #cancel {
+            left: 195px;
+        }
+
+        #check:checked ~ section {
+            margin-left: 250px;
+        }
+
+        section {
+            background: no-repeat;
+            background-position: center;
+            background-size: cover;
+            height: 100vh;
+            transition: all .5s;
+        }
+
+        /* Smooth scrolling effect */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+
+<section class="gallery-container">
+    <h1>Jaya E-Tools Apps</h1>
+    <div class="gallery">
+ 
+        <div class="boardcard">
+            <a href="/aksara_converter/"><b>Aksara Jawa</b><img src="/static/assets/images/aksara.png" height="70px" width="70px"></a>
+        </div>
+
+        <div class="boardcard">
+            <a href="/morse"><b>Sandi Morse</b><img src="/static/assets/images/morse.png" height="70px" width="70px"></a>
+        </div>
+        <div class="boardcard">
+            <a href="/kalkulator"><b>Kalkulator</b><img src="/static/assets/images/cal.png" height="70px" width="70px"></a>
+            
+        </div>
+        <div class="boardcard">
+            <a href="/blang"><b>Programing</b><img src="/static/assets/images/code.png" height="70px" width="70px"></a>
+        </div>
+
+
+    </div>
+</section>
+</body>
+</html>
