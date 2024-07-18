@@ -47,7 +47,7 @@ requirements = pyjnius, Pillow, jnius, sqlparse, oscpy, kivy, django==5.0.7, bs4
 #presplash.filename = %(source.dir)s/data/presplash.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/bima/static/assets/images/cam.png
+#icon.filename = %(source.dir)s/bima/static/assets/images/cam.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
