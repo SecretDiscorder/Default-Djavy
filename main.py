@@ -12,7 +12,7 @@ import threading
 from kivy.core.window import Window
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-
+import requests
 from os import listdir
 from textwrap import fill
 # Android **only** HTML viewer, always full screen.
