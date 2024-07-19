@@ -248,17 +248,22 @@ BoxLayout:
         id: wv
         orientation: "vertical"
 '''
-
+from kivy.uix.popup import Popup
 class MyKivyApp(App):
     def build(self):
         self.browser = None
         package_name = "id.pbssi.jayatools"
+        self.popup = Popup(title='Notification',
+                           content=Label(text='Apps doesn\'t installed from Play Store.'),
+                           size_hint=(None, None), size=(400, 200))
+
+        # Example usage trigger
+
         # Ganti dengan package name aplikasi yang ingin diperiksa
         is_installed_from_playstore = self.is_installed_from_playstore(package_name)
-        if not is_installed_from_playstore:
-            self.show_toast("Aplikasi tidak terinstal dari Play Store. Menutup aplikasi...")
-            self.show_toast("Apps doesn't installed from Play Store. Menutup aplikasi...")
-    
+            self.show_popup()
+            # Example usage trigger
+            self.show_popup()
             self.exit_app()
         self.log_path = os.path.join(STORAGE_PATH, "djandro.log")
         open(self.log_path, 'a').close()  # Touch the logfile
@@ -288,8 +293,12 @@ class MyKivyApp(App):
                 return True
             else:
                 return False
-        except PackageManager.NameNotFoundException:
+        except Exception as e:
             return False
+    def show_popup(self):
+        # Open the popup
+        self.popup.open()
+
     def exit_app(self, instance):
         # Keluar dari aplikasi
         activity.finish()
