@@ -44,6 +44,15 @@ from kivy.uix.modalview import ModalView
 from kivy.clock import Clock
 from android.runnable import run_on_ui_thread
 from jnius import autoclass, cast, PythonJavaClass, java_method
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from jnius import autoclass
+
+PackageManager = autoclass('android.content.pm.PackageManager')
+PythonActivity = autoclass('org.kivy.android.PythonActivity')
+
+Toast = autoclass('android.widget.Toast')
 
 WebViewA = autoclass('android.webkit.WebView')
 WebViewClient = autoclass('android.webkit.WebViewClient')
@@ -231,7 +240,14 @@ BoxLayout:
 class MyKivyApp(App):
     def build(self):
         self.browser = None
-
+        package_name = "id.pbssi.jayatools"
+        # Ganti dengan package name aplikasi yang ingin diperiksa
+        is_installed_from_playstore = self.is_installed_from_playstore(package_name)
+        if not is_installed_from_playstore:
+            self.show_toast("Aplikasi tidak terinstal dari Play Store. Menutup aplikasi...")
+            self.show_toast("Apps doesn't installed from Play Store. Menutup aplikasi...")
+    
+            self.exit_app()
         self.log_path = os.path.join(STORAGE_PATH, "djandro.log")
         open(self.log_path, 'a').close()  # Touch the logfile
         self.running = False
@@ -250,6 +266,21 @@ class MyKivyApp(App):
         Clock.schedule_interval(self.read_stdout, 1.0)  # Update log every 1 second
         self.update_toggle_text()  
         return self.root
+    def is_installed_from_playstore(self, package_name):
+        context = PythonActivity.mActivity.getApplicationContext()
+        pm = context.getPackageManager()
+        try:
+            app_info = pm.getApplicationInfo(package_name, PackageManager.GET_META_DATA)
+            installer_package = pm.getInstallerPackageName(package_name)
+            if installer_package == 'com.android.vending':
+                return True
+            else:
+                return False
+        except PackageManager.NameNotFoundException:
+            return False
+    def exit_app(self, instance):
+        # Keluar dari aplikasi
+        activity.finish()
     def update_toggle_text(self):
         if self.running:
             self.root.ids.info.text = "[color=#00ff00]Django is ON[/color]"
