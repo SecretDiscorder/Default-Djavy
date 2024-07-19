@@ -301,11 +301,11 @@ class MyKivyApp(App):
 
     def exit_app(self):
         # Keluar dari aplikasi
-      if platform == 'android':
-        import android
-        activity.finish()
-      else:
-        pass
+        if platform == 'android':
+            import android
+            android.mActivity.finish()
+        else:
+            pass
     def update_toggle_text(self):
         if self.running:
             self.root.ids.info.text = "[color=#00ff00]Django is ON[/color]"
@@ -403,7 +403,7 @@ class MyKivyApp(App):
         return True
 
     def on_resume(self):
-        if self.browser:
+        if self.browser and hasattr(self.browser, 'resume') and callable(getattr(self.browser, 'resume')):
             self.browser.resume()
         # Resume reading log when the application is resumed
         if self.running:
