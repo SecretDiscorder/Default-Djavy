@@ -299,9 +299,14 @@ class MyKivyApp(App):
         # Open the popup
         self.popup.open()
 
-    def exit_app(self, instance):
+    def exit_app(self):
         # Keluar dari aplikasi
+      if platform == 'android':
+        import android
+        android.activity.move_task_to_back()
         activity.finish()
+      else:
+        pass
     def update_toggle_text(self):
         if self.running:
             self.root.ids.info.text = "[color=#00ff00]Django is ON[/color]"
