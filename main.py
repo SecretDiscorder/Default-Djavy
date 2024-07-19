@@ -216,6 +216,7 @@ BoxLayout:
         size_hint_y: 0.1
 
         Button:
+            id: start_server_button
             text: 'Start Server'
             size_hint_y: None
             height: '50dp'
