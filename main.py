@@ -303,7 +303,6 @@ class MyKivyApp(App):
         # Keluar dari aplikasi
       if platform == 'android':
         import android
-        android.activity.move_task_to_back()
         activity.finish()
       else:
         pass
