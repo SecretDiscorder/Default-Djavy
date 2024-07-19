@@ -190,6 +190,18 @@ class WebView(ModalView):
 
         
 # Determine the storage path based on the platform
+# Determine the storage path based on the platform
+if platform == 'android':
+    from android.storage import app_storage_path
+    from android import mActivity
+    context = mActivity.getApplicationContext()
+    result = context.getExternalFilesDir(None)
+    if result:
+        STORAGE_PATH = result.getAbsolutePath()
+    else:
+        STORAGE_PATH = app_storage_path()  # Fallback, not as secure
+else:
+    STORAGE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 # Set Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "service.settings")

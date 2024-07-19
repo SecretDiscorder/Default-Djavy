@@ -68,7 +68,7 @@ button[type="submit"] {
 <body>
     <h1>Konverter</h1>
 	       
-        <form action="{% url 'morse' %}" method="post">
+        <form method="post">
 		{% csrf_token %}
 			<textarea name="expression" id="expression">{{ result }}</textarea>
 			<br>

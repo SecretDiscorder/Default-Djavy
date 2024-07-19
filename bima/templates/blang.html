@@ -130,7 +130,8 @@
 
 <p>main.blang</p>
 
-<form method="post">{% csrf_token %}
+<form method="post">
+{% csrf_token %}
 <div class="code-container">
 <div class="textarea-container"><!-- Tambahkan id pada textarea --><textarea id="tinymce-container" name="input_code" oninput="updateLineNumbers()">CETAK(&quot;HALLO DUNIA&quot;)</textarea></div>
 </div>

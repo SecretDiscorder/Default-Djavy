@@ -83,7 +83,9 @@
     </head>
     <body style="font-family: 'AksaraJawa', sans-serif;">
         <h1>Aksara Converter</h1>
-        <form method="post"> {% csrf_token %} <label for="aksara_text">Enter Aksara Jawa text:</label>
+        <form method="post"> 
+{% csrf_token %} 
+<label for="aksara_text">Enter Aksara Jawa text:</label>
             <textarea name="aksara_text" id="aksara_text" cols="30" rows="5">{{ translated_text }}</textarea>
             <br>
             <input type="submit" value="Convert">

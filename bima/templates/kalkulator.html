@@ -118,7 +118,9 @@
     <body>
         <h1>Kalkulator</h1>
         <div id="calculator">
-            <form method="post"> {% csrf_token %} <font size="10px">
+            <form method="post">
+ {% csrf_token %} 
+<font size="10px">
                     <textarea name="expression" id="expression">{{ result }}</textarea>
                 </font>
                 <br>
