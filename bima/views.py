@@ -10,7 +10,12 @@ from .shell import run  # Import your custom language interpreter function
 from bs4 import BeautifulSoup
 import math
 getcontext().prec = decimal.MAX_PREC
-
+from io import StringIO
+from decimal import Decimal, getcontext
+import math
+import io
+import base64
+import decimal
 from .text_morse import morse_translate, reverse_morse_translate
 from django.views.decorators.csrf import csrf_exempt
 from .jvdict import Jvdict
@@ -19,6 +24,37 @@ from .aksara import dotransliterate
 from django.conf import settings
 from django.views.generic import View
 import os
+import sys
+from django.conf import settings
+
+import textwrap
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+def generate_image(text, image_width=1000, image_height=1000):
+    # Create a blank image with white background
+    image = Image.new("RGB", (image_width, image_height), "white")
+    draw = ImageDraw.Draw(image)
+
+    # Load a font
+    font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "NotoSansJavanese.ttf")
+    font = ImageFont.truetype(font_path, size=20)
+
+    # Wrap the text to fit the image width
+    wrapped_text = textwrap.fill(text, width=40)  # Adjust the width as needed
+
+    # Draw text on a temporary image to get its bounding box
+    temp_image = Image.new("RGB", (1, 1), "white")
+    temp_draw = ImageDraw.Draw(temp_image)
+    text_bbox = temp_draw.textbbox((0, 0), wrapped_text, font=font)
+
+    # Calculate text position
+    text_x = (image_width - (text_bbox[2] - text_bbox[0])) // 2
+    text_y = (image_height - (text_bbox[3] - text_bbox[1])) // 2
+
+    # Draw text on the main image
+    draw.text((text_x, text_y), wrapped_text, fill="black", font=font)
+
+    return image
+    
 class StaticFilesView(View):
     def get(self, request, filename):
         static_dir = settings.BASE_DIR / 'bima/static/'
@@ -334,5 +370,5 @@ def blang(request):
         print(f"An error occurred: {e}")
         output_result = f"An error occurred: {e}"
 
-    return render(request, 'bkang.html', {'output_result': output_result, 'output': output})
+    return render(request, 'blang.html', {'output_result': output_result, 'output': output})
 
