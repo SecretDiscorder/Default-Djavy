@@ -37,7 +37,7 @@ version = 1.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = pyjnius, Pillow, jnius, sqlparse, oscpy, kivy, django==5.0.7, bs4, beautifulsoup4, chardet, idna, urllib3, asgiref, regex, six, soupsieve, sh, colorama, toml, charset_normalizer, roman, pytz, django-cors-headers, python-dateutil
+requirements = pyjnius, Pillow, tzdata, jnius, sqlparse, oscpy, kivy, django==5.0.7, bs4, beautifulsoup4, chardet, idna, urllib3, asgiref, regex, six, soupsieve, sh, colorama, toml, charset_normalizer, roman, pytz, django-cors-headers, python-dateutil
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
