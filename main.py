@@ -261,10 +261,10 @@ class MyKivyApp(App):
 
         # Ganti dengan package name aplikasi yang ingin diperiksa
         is_installed_from_playstore = self.is_installed_from_playstore(package_name)
-            self.show_popup()
+        if not is_installed_from_playstore:
             # Example usage trigger
-            self.show_popup()
-            self.exit_app()
+          self.show_popup()
+          self.exit_app()
         self.log_path = os.path.join(STORAGE_PATH, "djandro.log")
         open(self.log_path, 'a').close()  # Touch the logfile
         self.running = False
