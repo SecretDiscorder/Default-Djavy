@@ -303,11 +303,7 @@ class MyKivyApp(App):
 
         # Example usage trigger
         is_installed_from_playstore = self.is_installed_from_playstore(package_name)
-        if not is_installed_from_playstore:
-            self.root.ids.info.text = "[color=#ff0000]Apps doesn't installed from Play Store. Please purchase.[/color]"
-            self.root.ids.start_server_button.disabled = True  # Disable Start Server button
-            Clock.schedule_once(self.show_popup, 0.1)  # Show popup after a slight delay
-            return
+
 
         self.log_path = os.path.join(STORAGE_PATH, "djandro.log")
         open(self.log_path, 'a').close()  # Touch the logfile
@@ -315,6 +311,11 @@ class MyKivyApp(App):
         self.logging = False
         self.root = Builder.load_string(KV)
 # Initialize OSC client and server
+        if not is_installed_from_playstore:
+            self.root.ids.info.text = "[color=#ff0000]Apps doesn't installed from Play Store. Please purchase.[/color]"
+            self.root.ids.start_server_button.disabled = True  # Disable Start Server button
+            Clock.schedule_once(self.show_popup, 0.1)  # Show popup after a slight delay
+            return
         self.osc_server = OSCThreadServer()
         self.osc_server.listen(address='127.0.0.1', port=3001, default=True)
         self.osc_client = OSCClient('127.0.0.1', port=3000)
