@@ -47,7 +47,9 @@ from jnius import autoclass, cast, PythonJavaClass, java_method
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
-from jnius import autoclass
+from jnius import autoclass, cast
+ConnectivityManager = autoclass('android.net.ConnectivityManager')
+Context = autoclass('android.content.Context')
 
 PackageManager = autoclass('android.content.pm.PackageManager')
 PythonActivity = autoclass('org.kivy.android.PythonActivity')
@@ -257,42 +259,56 @@ def load_package_name_from_sheets():
         # Mengambil data dari URL
         response = requests.get(url)
         
-        if response.status_code == 200:
+        try:
             lines = response.text.strip().split('\n')
             package_name = lines[-1].split(',')[0]  # Ambil package_name dari baris terakhir
             return package_name
-        else:
-            print(f"Failed to retrieve data, status code: {response.status_code}")
+        except Exception:
             return None
     except Exception as e:
         print(f"Error loading package_name from Google Sheets: {e}")
         return None
+
+def check_network_status():
+    try:
+        # Mendapatkan konteks dari aplikasi Kivy
+        PythonActivity = autoclass('org.kivy.android.PythonActivity')
+        activity = PythonActivity.mActivity
+        context = activity.getApplicationContext()
+
+        # Mendapatkan sistem manajemen koneksi
+        connectivity_manager = context.getSystemService(Context.CONNECTIVITY_SERVICE)
+        network_info = connectivity_manager.getActiveNetworkInfo()
+
+        if network_info and network_info.isConnected():
+            return True
+        else:
+            return False
+    
+    except Exception as e:
+        pass
 
 class MyKivyApp(App):
     def build(self):
         self.browser = None
         url = "https://google.com"
         response = requests.get(url)
-        if response.status_code == 200:
+        if check_network_status():
           package_name = load_package_name_from_sheets()
         else:
           package_name = "id.pbssi.jayatools"
         self.popup = Popup(title='Notification',
                            content=Label(text='Apps doesn\'t installed from Play Store.'),
                            size_hint=(None, None), size=(400, 200))
-          # Ambil package_name dari Google Sheets
-        if not package_name:
-            print("Package name not found in Google Sheets.")
-            return
 
         # Example usage trigger
-
-        # Ganti dengan package name aplikasi yang ingin diperiksa
         is_installed_from_playstore = self.is_installed_from_playstore(package_name)
         if not is_installed_from_playstore:
-            # Example usage trigger
-          self.show_popup()
-          self.exit_app()
+            self.root.ids.info.text = "[color=#ff0000]Apps doesn't installed from Play Store. Please purchase.[/color]"
+            self.root.ids.start_server_button.disabled = True  # Disable Start Server button
+            Clock.schedule_once(self.show_popup, 0.1)  # Show popup after a slight delay
+            return
+
         self.log_path = os.path.join(STORAGE_PATH, "djandro.log")
         open(self.log_path, 'a').close()  # Touch the logfile
         self.running = False
