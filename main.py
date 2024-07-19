@@ -271,11 +271,16 @@ def load_package_name_from_sheets():
 class MyKivyApp(App):
     def build(self):
         self.browser = None
-        #package_name = "id.pbssi.jayatools"
+        url = "https://google.com"
+        response = requests.get(url)
+        if response.status_code == 200:
+          package_name = load_package_name_from_sheets()
+        else:
+          package_name = "id.pbssi.jayatools"
         self.popup = Popup(title='Notification',
                            content=Label(text='Apps doesn\'t installed from Play Store.'),
                            size_hint=(None, None), size=(400, 200))
-        package_name = load_package_name_from_sheets()  # Ambil package_name dari Google Sheets
+          # Ambil package_name dari Google Sheets
         if not package_name:
             print("Package name not found in Google Sheets.")
             return
