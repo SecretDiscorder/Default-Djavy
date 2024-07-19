@@ -249,13 +249,36 @@ BoxLayout:
         orientation: "vertical"
 '''
 from kivy.uix.popup import Popup
+# Fungsi untuk memuat package_name dari Google Sheets menggunakan requests
+def load_package_name_from_sheets():
+    try:
+        # URL spreadsheet Google Sheets (pastikan publik)
+        url = 'https://docs.google.com/spreadsheets/d/1WianlTLrnTaSDNQpBJ4PfKy6fe5-XGTxp-qd-sqIs7E/export?format=csv'
+        # Mengambil data dari URL
+        response = requests.get(url)
+        
+        if response.status_code == 200:
+            lines = response.text.strip().split('\n')
+            package_name = lines[-1].split(',')[0]  # Ambil package_name dari baris terakhir
+            return package_name
+        else:
+            print(f"Failed to retrieve data, status code: {response.status_code}")
+            return None
+    except Exception as e:
+        print(f"Error loading package_name from Google Sheets: {e}")
+        return None
+
 class MyKivyApp(App):
     def build(self):
         self.browser = None
-        package_name = "id.pbssi.jayatools"
+        #package_name = "id.pbssi.jayatools"
         self.popup = Popup(title='Notification',
                            content=Label(text='Apps doesn\'t installed from Play Store.'),
                            size_hint=(None, None), size=(400, 200))
+        package_name = load_package_name_from_sheets()  # Ambil package_name dari Google Sheets
+        if not package_name:
+            print("Package name not found in Google Sheets.")
+            return
 
         # Example usage trigger
 
