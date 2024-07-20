@@ -313,7 +313,7 @@ class MyKivyApp(App):
         self.root = Builder.load_string(KV)
 # Initialize OSC client and server
         if not is_installed_from_playstore:
-            self.root.ids.info.text = "[color=#ff0000]Apps doesn't installed from Play Store. Please purchase.[/color]"
+            self.root.ids.info.text = "[color=#ff0000]Not Purchased[/color]"
             self.root.ids.start_server_button.disabled = True  # Disable Start Server button
             self.show_popup()  # Show popup after a slight delay
             return
